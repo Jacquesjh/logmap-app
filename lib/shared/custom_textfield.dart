@@ -31,6 +31,7 @@ class CustomTextField extends StatelessWidget {
         hintStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
+          color: Colors.green,
         ),
       ),
     );

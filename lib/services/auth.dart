@@ -7,7 +7,7 @@ class FirebaseAuthMethods {
   final FirebaseAuth _auth;
   FirebaseAuthMethods(this._auth);
 
-  // Email signup function
+  // EMAIL SIGN UP
   Future<void> signUpWithEmail({
     required String email,
     required String password,
@@ -18,6 +18,37 @@ class FirebaseAuthMethods {
         email: email,
         password: password
       );
+      await sendEmailVerification(context);
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
+
+
+  // EMAIL LOGIN
+  Future<void> loginWithEmail({
+   required String email,
+   required String password,
+   required BuildContext context,
+  }) async {
+    try {
+      await _auth.signInWithEmailAndPassword(
+        email: email, 
+        password: password,
+      );
+      if (!_auth.currentUser!.emailVerified) {
+        await sendEmailVerification(context);
+      }
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
+
+  // EMAIL VERIFICATION
+  Future<void> sendEmailVerification(BuildContext context) async {
+    try {
+      _auth.currentUser!.sendEmailVerification();
+      showSnackBar(context, 'Verificação de Email enviada');
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }

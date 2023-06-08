@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
         } else if (snapshot.hasData) {
           return const MapScreen();
         } else {
-          return const LoginScreen();
+          return const EmailPasswordLogin(); //return const LoginScreen();
         }
       },
     );
