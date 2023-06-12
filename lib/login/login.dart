@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logmap/services/auth.dart';
+import 'package:logmap/shared/custom_passwordfield.dart';
 import 'package:logmap/shared/custom_textfield.dart';
 import 'package:logmap/shared/icons.dart';
 
@@ -36,10 +37,6 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Logmap',
-            style: TextStyle(fontSize: 40),
-          ),
           Image.asset(logMapLogo),
           const Text(
             'Login',
@@ -56,7 +53,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
           const SizedBox(height: 20),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: CustomTextField(
+            child: CustomPasswordField(
                 controller: passwordController, hintText: 'Senha'),
           ),
           const SizedBox(height: 13),
