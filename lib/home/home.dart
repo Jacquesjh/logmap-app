@@ -1,28 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logmap/login/login.dart';
 import 'package:logmap/map/map.dart';
 import 'package:logmap/profile/profile.dart';
 import 'package:logmap/services/auth.dart';
 
-
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: AuthService().userStream,
+    return StreamBuilder<User?>(
+      stream: AuthService()
+          .authStateChanges, // Stream to monitor authentication state changes
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('loading');
-        } else if (snapshot.hasError) {
+          // While authentication state is being determined, show a loading indicator
           return const Center(
-            child: Text('error'),
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          // If an error occurs, display an error message
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
           );
         } else if (snapshot.hasData) {
+          // If user is authenticated, navigate to the MapScreen
           return const MapScreen();
         } else {
-          return const EmailPasswordLogin(); //return const LoginScreen();
+          // If user is not authenticated, display the login screen
+          return const EmailPasswordLogin();
+          // Alternatively, you can use named routes to navigate:
+          // Navigator.pushNamed(context, '/login');
         }
       },
     );
