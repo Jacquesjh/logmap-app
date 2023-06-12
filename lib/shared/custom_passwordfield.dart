@@ -11,10 +11,10 @@ class CustomPasswordField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  CustomPasswordFieldState createState() => CustomPasswordFieldState();
+  State<CustomPasswordField> createState() => _CustomPasswordFieldState();
 }
 
-class CustomPasswordFieldState extends State<CustomPasswordField> {
+class _CustomPasswordFieldState extends State<CustomPasswordField> {
   bool _obscureText = true;
 
   @override

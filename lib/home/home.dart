@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:logmap/driverSelect/driver_select.dart';
 import 'package:logmap/login/login.dart';
-import 'package:logmap/map/map.dart';
-import 'package:logmap/profile/profile.dart';
 import 'package:logmap/services/auth.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -26,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           );
         } else if (snapshot.hasData) {
           // If user is authenticated, navigate to the MapScreen
-          return const MapScreen();
+          return const DriverSelectScreen();
         } else {
           // If user is not authenticated, display the login screen
           return const EmailPasswordLogin();

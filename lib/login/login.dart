@@ -7,7 +7,7 @@ import 'package:logmap/shared/custom_textfield.dart';
 import 'package:logmap/shared/icons.dart';
 
 class EmailPasswordLogin extends StatefulWidget {
-  const EmailPasswordLogin({super.key});
+  const EmailPasswordLogin({Key? key}) : super(key: key);
 
   @override
   State<EmailPasswordLogin> createState() => _EmailPasswordLoginState();
@@ -26,9 +26,10 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
 
   void loginUser() {
     FirebaseAuthMethods(FirebaseAuth.instance).loginWithEmail(
-        email: emailController.text,
-        password: passwordController.text,
-        context: context);
+      email: emailController.text,
+      password: passwordController.text,
+      context: context,
+    );
   }
 
   @override
@@ -54,7 +55,9 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: CustomPasswordField(
-                controller: passwordController, hintText: 'Senha'),
+              controller: passwordController,
+              hintText: 'Senha',
+            ),
           ),
           const SizedBox(height: 13),
           LoginButton(
@@ -80,14 +83,14 @@ class LoginButton extends StatelessWidget {
   final double width;
 
   const LoginButton({
-    super.key,
+    Key? key,
     required this.text,
     required this.icon,
     required this.color,
     required this.loginMethod,
     required this.height,
     required this.width,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
