@@ -33,16 +33,6 @@ class AuthService {
   // Returns the current authenticated user.
   User? get currentUser => _auth.currentUser;
 
-  // Performs anonymous login.
-  Future<void> anonLogin() async {
-    try {
-      await FirebaseAuth.instance.signInAnonymously();
-    } on FirebaseAuthException catch (e) {
-      // Handle error
-      print('An error occurred during anonymous login: ${e.message}');
-    }
-  }
-
   // Signs out the current user.
   Future<void> signOut() async {
     try {
