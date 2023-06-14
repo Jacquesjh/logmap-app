@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/routes.dart';
 
 // Import the firebase_core plugin
@@ -7,9 +8,13 @@ import 'package:logmap/themes.dart';
 import 'firebase_options.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const App());
+  runApp(
+    const ProviderScope(
+      child: App(),
+    ),
+  );
 }
 
 /// We are using a StatefulWidget such that we only create the [Future] once,
