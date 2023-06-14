@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:logmap/shared/showSnackBar.dart';
+import 'package:logmap/shared/show_snackbar.dart';
 
 class FirebaseAuthMethods {
   final FirebaseAuth _auth;
