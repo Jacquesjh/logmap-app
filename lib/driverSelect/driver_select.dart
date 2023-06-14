@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/services/auth.dart';
 import 'package:logmap/shared/models.dart';
-
-final selectedDriverProvider = StateProvider<Driver?>((ref) => null);
 
 class DriverSelectScreen extends ConsumerStatefulWidget {
   const DriverSelectScreen({Key? key}) : super(key: key);
