@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-final selectedIndexBottomNavBarProvider = StateProvider<int>((ref) => 0);
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logmap/providers/bottom_nav_bar_provider.dart';
 
 class BottomNavBar extends ConsumerWidget {
   const BottomNavBar({Key? key}) : super(key: key);
