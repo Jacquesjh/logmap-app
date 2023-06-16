@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logmap/services/auth.dart';
 import 'package:logmap/shared/custom_passwordfield.dart';
 import 'package:logmap/shared/custom_textfield.dart';
@@ -35,6 +34,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).bottomAppBarTheme.color,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
