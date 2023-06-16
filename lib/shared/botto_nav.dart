@@ -14,13 +14,13 @@ class BottomNavBar extends ConsumerWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       items: const [
-        // BottomNavigationBarItem(
-        //   icon: Icon(
-        //     FontAwesomeIcons.truckFast,
-        //     size: 20,
-        //   ),
-        //   label: 'Corridas',
-        // ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            FontAwesomeIcons.truckFast,
+            size: 20,
+          ),
+          label: 'Corridas',
+        ),
         // BottomNavigationBarItem(
         //   icon: Icon(
         //     FontAwesomeIcons.boxesPacking,
@@ -45,15 +45,19 @@ class BottomNavBar extends ConsumerWidget {
       ],
       selectedItemColor: Theme.of(context)
           .primaryColor, // Use the primary color of your theme for highlighting
-      unselectedItemColor: Colors.grey, // Adjust the color for unselected items
+      unselectedItemColor:
+          Colors.white, // Adjust the color for unselected items
       onTap: (int index) {
         ref.read(selectedIndexBottomNavBarProvider.notifier).state =
             index; // Update the selected index
         switch (index) {
           case 0:
-            Navigator.pushNamed(context, '/map');
+            Navigator.pushNamed(context, '/runs');
             break;
           case 1:
+            Navigator.pushNamed(context, '/map');
+            break;
+          case 2:
             Navigator.pushNamed(context, '/profile');
             break;
         }

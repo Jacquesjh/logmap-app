@@ -22,6 +22,11 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
     return TextField(
       obscureText: _obscureText,
       controller: widget.controller,
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: Colors.black, // Set input text color to black
+      ),
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -39,7 +44,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
         hintStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          color: Colors.green,
+          color: Colors.grey,
         ),
         suffixIcon: IconButton(
           icon: Icon(

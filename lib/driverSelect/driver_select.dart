@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logmap/models/driver_model.dart';
+import 'package:logmap/providers/bottom_nav_bar_provider.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/services/auth.dart';
-import 'package:logmap/shared/models.dart';
 
 class DriverSelectScreen extends ConsumerStatefulWidget {
   const DriverSelectScreen({Key? key}) : super(key: key);
@@ -35,6 +36,7 @@ class _DriverSelectScreenState extends ConsumerState<DriverSelectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).bottomAppBarTheme.color,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -88,7 +90,7 @@ class _DriverSelectScreenState extends ConsumerState<DriverSelectScreen> {
                       // Proceed to the next screen
                       Navigator.pushNamed(
                         context,
-                        '/map',
+                        '/runs',
                       );
                     }
                   : null,
@@ -98,6 +100,7 @@ class _DriverSelectScreenState extends ConsumerState<DriverSelectScreen> {
             ElevatedButton(
               onPressed: () async {
                 await AuthService().signOut();
+                ref.read(selectedIndexBottomNavBarProvider.notifier).state = 0;
 
                 Navigator.pushNamed(
                   context,

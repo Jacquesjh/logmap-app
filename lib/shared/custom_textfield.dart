@@ -14,6 +14,11 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: Colors.black, // Set input text color to black
+      ),
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -31,7 +36,7 @@ class CustomTextField extends StatelessWidget {
         hintStyle: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w400,
-          color: Colors.green,
+          color: Colors.grey, // Set hint text color to black
         ),
       ),
     );
