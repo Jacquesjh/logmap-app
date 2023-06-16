@@ -6,6 +6,7 @@ import 'package:logmap/models/run_model.dart';
 import 'package:logmap/models/truck_model.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/shared/calculate_run_interval.dart';
+import 'package:logmap/shared/get_current_date.dart';
 
 class AllRuns extends ConsumerWidget {
   const AllRuns({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class AllRuns extends ConsumerWidget {
           .collection('users')
           .doc(userUid)
           .collection('runs')
-          .where('date', isEqualTo: "2023-06-08")
+          .where('date', isEqualTo: getCurrentDate())
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {

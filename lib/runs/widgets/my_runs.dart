@@ -7,6 +7,7 @@ import 'package:logmap/models/truck_model.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
 import 'package:logmap/shared/calculate_run_interval.dart';
+import 'package:logmap/shared/get_current_date.dart';
 
 class MyRuns extends ConsumerWidget {
   const MyRuns({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class MyRuns extends ConsumerWidget {
           .collection('users')
           .doc(userUid)
           .collection('runs')
-          .where('date', isEqualTo: "2023-06-08")
+          .where('date', isEqualTo: getCurrentDate())
           .where('driverRef',
               isEqualTo: ref.read(selectedDriverProvider.notifier).state?.ref)
           .snapshots(),
