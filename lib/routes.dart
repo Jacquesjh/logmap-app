@@ -9,7 +9,7 @@ import 'package:logmap/runs/runs.dart';
 var appRoutes = {
   '/': (context) => const HomeScreen(),
   '/login': (context) => const EmailPasswordLogin(),
-  '/map': (context) => const MapScreen(),
+  '/map': (context) => MapScreen(),
   '/profile': (context) => const ProfileScreen(),
   '/driverSelect': (context) => const DriverSelectScreen(),
   '/deliveries': (context) => const DeliveriesScreen(),

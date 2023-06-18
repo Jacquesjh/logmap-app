@@ -7,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:logmap/themes.dart';
 import 'firebase_options.dart';
 
-void main() {
+void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
