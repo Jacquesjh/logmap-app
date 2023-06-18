@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class Client {
   final Map<String, List<DocumentReference>> deliveriesRef;
@@ -11,8 +12,8 @@ class Client {
     required this.ref,
   });
 
-  factory Client.fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>?;
+  factory Client.fromSnapshot(AsyncSnapshot<DocumentSnapshot> snapshot) {
+    final data = snapshot.data!.data() as Map<String, dynamic>?;
     if (data == null) {
       throw Exception("Invalid data format");
     }
@@ -26,7 +27,7 @@ class Client {
     return Client(
       deliveriesRef: deliveriesRef,
       name: data['name'] as String,
-      ref: snapshot.reference,
+      ref: snapshot.data!.reference,
     );
   }
 }

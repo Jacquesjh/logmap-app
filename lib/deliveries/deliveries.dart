@@ -1,16 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logmap/deliveries/widgets/deliveries_list_view.dart';
+import 'package:logmap/providers/selected_run_provider.dart';
 import 'package:logmap/shared/botto_nav.dart';
 
-class DeliveriesScreen extends StatelessWidget {
-  const DeliveriesScreen({super.key});
+class DeliveriesScreen extends ConsumerWidget {
+  const DeliveriesScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavBar(),
-      backgroundColor: Colors.amber,
-      appBar: AppBar(
-        title: Text('DeliveriesScreen'),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedRun = ref.read(selectedRunProvider.notifier).state;
+
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        bottomNavigationBar: const BottomNavBar(),
+        appBar: AppBar(
+          automaticallyImplyLeading: false, // Disable the back arrow
+          title: const Text(
+            'Pedidos',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        body: selectedRun != null
+            ? DeliveriesListView(deliveriesRef: selectedRun.deliveriesRef)
+            : const Center(
+                child: Text(
+                  'Selecione uma corrida',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class Item {
   final String name;
@@ -11,16 +12,11 @@ class Item {
     required this.unit,
   });
 
-  factory Item.fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>?;
-    if (data == null) {
-      throw Exception("Invalid data format");
-    }
-
+  factory Item.fromSnapshot(Map<String, dynamic> item) {
     return Item(
-      name: data['name'] as String,
-      quantity: data['quantity'] as String,
-      unit: data['unit'] as String,
+      name: item['name'] as String,
+      quantity: item['quantity'] as String,
+      unit: item['unit'] as String,
     );
   }
 }
@@ -34,15 +30,10 @@ class GeoAddress {
     required this.longitude,
   });
 
-  factory GeoAddress.fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>?;
-    if (data == null) {
-      throw Exception("Invalid data format");
-    }
-
+  factory GeoAddress.fromSnapshot(Map<String, dynamic> lastLocationMap) {
     return GeoAddress(
-      latitude: data['latitude'] as double,
-      longitude: data['longitude'] as double,
+      latitude: lastLocationMap['latitude'] as double,
+      longitude: lastLocationMap['longitude'] as double,
     );
   }
 }
@@ -58,7 +49,6 @@ class Delivery {
   final DocumentReference? driverRef;
   final String expectedDeliveryInterval;
   final GeoAddress geoAddress;
-  final String id;
   final bool isComplete;
   final List<Item> items;
   final int number;
@@ -77,7 +67,6 @@ class Delivery {
     required this.driverRef,
     required this.expectedDeliveryInterval,
     required this.geoAddress,
-    required this.id,
     required this.isComplete,
     required this.items,
     required this.number,
@@ -86,8 +75,8 @@ class Delivery {
     required this.truckRef,
   });
 
-  factory Delivery.fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>?;
+  factory Delivery.fromSnapshot(AsyncSnapshot<DocumentSnapshot> snapshot) {
+    final data = snapshot.data!.data() as Map<String, dynamic>?;
     if (data == null) {
       throw Exception("Invalid data format");
     }
@@ -101,8 +90,7 @@ class Delivery {
     final items =
         itemsJson.map((itemJson) => Item.fromSnapshot(itemJson)).toList();
 
-    final geoAddress =
-        GeoAddress.fromSnapshot(data['geoAddress'] as DocumentSnapshot);
+    final geoAddress = GeoAddress.fromSnapshot(data['geoAddress']);
 
     return Delivery(
       address: data['address'] as String,
@@ -115,13 +103,16 @@ class Delivery {
       driverRef: driverRef,
       expectedDeliveryInterval: data['expectedDeliveryInterval'] as String,
       geoAddress: geoAddress,
-      id: data['id'] as String,
       isComplete: data['isComplete'] as bool,
       items: items,
       number: data['number'] as int,
-      ref: snapshot.reference,
+      ref: snapshot.data!.reference,
       state: data['state'] as String,
       truckRef: truckRef,
     );
+  }
+
+  Future<void> updateIsComplete(bool isComplete) async {
+    await ref?.update({'isComplete': isComplete});
   }
 }
