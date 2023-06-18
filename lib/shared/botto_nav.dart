@@ -21,13 +21,13 @@ class BottomNavBar extends ConsumerWidget {
           ),
           label: 'Corridas',
         ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(
-        //     FontAwesomeIcons.boxesPacking,
-        //     size: 20,
-        //   ),
-        //   label: 'Entregas',
-        // ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            FontAwesomeIcons.boxesPacking,
+            size: 20,
+          ),
+          label: 'Pedidos',
+        ),
         BottomNavigationBarItem(
           icon: Icon(
             FontAwesomeIcons.solidMap,
@@ -55,9 +55,12 @@ class BottomNavBar extends ConsumerWidget {
             Navigator.pushNamed(context, '/runs');
             break;
           case 1:
-            Navigator.pushNamed(context, '/map');
+            Navigator.pushNamed(context, '/deliveries');
             break;
           case 2:
+            Navigator.pushNamed(context, '/profile');
+            break;
+          case 3:
             Navigator.pushNamed(context, '/profile');
             break;
         }
