@@ -75,7 +75,7 @@ class Delivery {
     required this.truckRef,
   });
 
-  factory Delivery.fromSnapshot(AsyncSnapshot<DocumentSnapshot> snapshot) {
+  factory Delivery.fromAsyncSnapshot(AsyncSnapshot<DocumentSnapshot> snapshot) {
     final data = snapshot.data!.data() as Map<String, dynamic>?;
     if (data == null) {
       throw Exception("Invalid data format");
@@ -107,6 +107,42 @@ class Delivery {
       items: items,
       number: data['number'] as int,
       ref: snapshot.data!.reference,
+      state: data['state'] as String,
+      truckRef: truckRef,
+    );
+  }
+  factory Delivery.fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>?;
+    if (data == null) {
+      throw Exception("Invalid data format");
+    }
+
+    final clientRef = data['clientRef'] as DocumentReference?;
+    final deliveredAt = data['deliveredAt'] as Timestamp?;
+    final driverRef = data['driverRef'] as DocumentReference?;
+    final truckRef = data['truckRef'] as DocumentReference?;
+
+    final itemsJson = data['items'] as List<dynamic>;
+    final items =
+        itemsJson.map((itemJson) => Item.fromSnapshot(itemJson)).toList();
+
+    final geoAddress = GeoAddress.fromSnapshot(data['geoAddress']);
+
+    return Delivery(
+      address: data['address'] as String,
+      addressNumber: data['addressNumber'] as String,
+      city: data['city'] as String,
+      clientRef: clientRef,
+      createdAt: data['createdAt'] as Timestamp,
+      deliveryDate: data['deliveryDate'] as String,
+      deliveredAt: deliveredAt,
+      driverRef: driverRef,
+      expectedDeliveryInterval: data['expectedDeliveryInterval'] as String,
+      geoAddress: geoAddress,
+      isComplete: data['isComplete'] as bool,
+      items: items,
+      number: data['number'] as int,
+      ref: snapshot.reference,
       state: data['state'] as String,
       truckRef: truckRef,
     );

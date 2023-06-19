@@ -1,22 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-class GeoAddress {
-  final double latitude;
-  final double longitude;
-
-  GeoAddress({
-    required this.latitude,
-    required this.longitude,
-  });
-
-  factory GeoAddress.fromSnapshot(Map<String, dynamic> lastLocationMap) {
-    return GeoAddress(
-      latitude: lastLocationMap['latitude'] as double,
-      longitude: lastLocationMap['longitude'] as double,
-    );
-  }
-}
+import 'package:logmap/models/delivery_model.dart';
 
 class Truck {
   final List<DocumentReference> activeDeliveriesRef;
@@ -47,7 +31,7 @@ class Truck {
     required this.currentDateDriversRef,
   });
 
-  factory Truck.fromSnapshot(AsyncSnapshot<DocumentSnapshot> snapshot) {
+  factory Truck.fromAsyncSnapshot(AsyncSnapshot<DocumentSnapshot> snapshot) {
     final data = snapshot.data!.data() as Map<String, dynamic>?;
     if (data == null) {
       throw Exception("Invalid data format");
@@ -62,11 +46,15 @@ class Truck {
 
     final geoAddressArrayJson = data['geoAddressArray'] as List<dynamic>;
     final geoAddressArray = geoAddressArrayJson
-        .map((geoAddressJson) => GeoAddress.fromSnapshot(geoAddressJson))
+        .map((geoAddressJson) => GeoAddress(
+            latitude: geoAddressJson.latitude,
+            longitude: geoAddressJson.longitude))
         .toList();
 
     final historyRef = data['historyRef'] as DocumentReference;
-    final lastLocation = GeoAddress.fromSnapshot(data['lastLocation']);
+    final lastLocation = GeoAddress(
+        latitude: data['lastLocation'].latitude,
+        longitude: data['lastLocation'].longitude);
 
     return Truck(
       activeDeliveriesRef: activeDeliveriesRef,
@@ -83,5 +71,53 @@ class Truck {
       currentDateDriversRef: (data['currentDateDriversRef'] as List<dynamic>)
           .cast<DocumentReference>(),
     );
+  }
+  factory Truck.fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>?;
+    if (data == null) {
+      throw Exception("Invalid data format");
+    }
+
+    final activeDeliveriesRef = (data['activeDeliveriesRef'] as List<dynamic>)
+        .cast<DocumentReference>();
+    final completedDeliveriesRef =
+        (data['completedDeliveriesRef'] as List<dynamic>)
+            .cast<DocumentReference>();
+    final driverRef = data['driverRef'] as DocumentReference?;
+
+    final geoAddressArrayJson = data['geoAddressArray'] as List<dynamic>;
+    final geoAddressArray = geoAddressArrayJson
+        .map((geoAddressJson) => GeoAddress(
+            latitude: geoAddressJson.latitude,
+            longitude: geoAddressJson.longitude))
+        .toList();
+
+    final historyRef = data['historyRef'] as DocumentReference;
+    final lastLocation = GeoAddress(
+        latitude: data['lastLocation'].latitude,
+        longitude: data['lastLocation'].longitude);
+
+    return Truck(
+      activeDeliveriesRef: activeDeliveriesRef,
+      completedDeliveriesRef: completedDeliveriesRef,
+      driverRef: driverRef,
+      geoAddressArray: geoAddressArray,
+      historyRef: historyRef,
+      lastLocation: lastLocation,
+      licensePlate: data['licensePlate'] as String,
+      name: data['name'] as String,
+      number: data['number'] as int,
+      ref: snapshot.reference,
+      size: data['size'] as String,
+      currentDateDriversRef: (data['currentDateDriversRef'] as List<dynamic>)
+          .cast<DocumentReference>(),
+    );
+  }
+
+  Future<void> updateLocation(GeoPoint lastLocation) async {
+    await ref?.update({
+      'lastLocation': lastLocation,
+      'geoAddressArray': FieldValue.arrayUnion([lastLocation])
+    });
   }
 }

@@ -68,7 +68,8 @@ class MyRuns extends ConsumerWidget {
                                 future: run.truckRef!.get(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    final truck = Truck.fromSnapshot(snapshot);
+                                    final truck =
+                                        Truck.fromAsyncSnapshot(snapshot);
                                     return Text('Caminhão ${truck.name}',
                                         style: const TextStyle(fontSize: 13));
                                   } else if (snapshot.hasError) {
