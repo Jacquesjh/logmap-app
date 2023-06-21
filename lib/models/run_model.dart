@@ -53,6 +53,10 @@ class Run {
   Future<void> updateDriver(DocumentReference driverRef) async {
     await ref.update({'driverRef': driverRef});
   }
+
+  Future<void> updateStatus(String newStatus) async {
+    await ref.update({"status": status});
+  }
 }
 
 class Note {
