@@ -40,23 +40,27 @@ class MapScreen extends ConsumerWidget {
                           userGeoAddress: user.geoAddress,
                           selectedRun: selectedRun,
                         )
-                      : GoogleMap(
-                          initialCameraPosition: CameraPosition(
-                            target: LatLng(user.geoAddress.latitude,
-                                user.geoAddress.longitude),
-                            zoom: 15,
+                      : Expanded(
+                          child: GoogleMap(
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(user.geoAddress.latitude,
+                                  user.geoAddress.longitude),
+                              zoom: 15,
+                              tilt: 40,
+                              bearing: 10,
+                            ),
+                            markers: {
+                              Marker(
+                                markerId: const MarkerId('userGeoAddress'),
+                                position: LatLng(
+                                  user.geoAddress.latitude,
+                                  user.geoAddress.longitude,
+                                ),
+                                infoWindow:
+                                    const InfoWindow(title: 'User Address'),
+                              )
+                            },
                           ),
-                          markers: {
-                            Marker(
-                              markerId: const MarkerId('userGeoAddress'),
-                              position: LatLng(
-                                user.geoAddress.latitude,
-                                user.geoAddress.longitude,
-                              ),
-                              infoWindow:
-                                  const InfoWindow(title: 'User Address'),
-                            )
-                          },
                         );
                 } else if (snapshot.hasError) {
                   return const Text('Error');

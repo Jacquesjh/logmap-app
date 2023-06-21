@@ -163,54 +163,55 @@ class _GoogleMapsSelectedRun extends State<GoogleMapsSelectedRun> {
     }
   }
 
-  void updateLocationTracking() {
-    final status = widget.selectedRun.status;
+  // void updateLocationTracking() {
+  //   final status = widget.selectedRun.status;
 
-    if (status == 'progress' && locationTimer == null) {
-      startLocationTracking();
-    } else if (status != 'progress' && locationTimer != null) {
-      stopLocationTracking();
-    }
-  }
+  //   if (status == 'progress' && locationTimer == null) {
+  //     startLocationTracking();
+  //   } else if (status != 'progress' && locationTimer != null) {
+  //     stopLocationTracking();
+  //   }
+  // }
 
-  void startLocationTracking() {
-    final status = widget.selectedRun.status;
+  // void startLocationTracking() {
+  //   final status = widget.selectedRun.status;
 
-    if (status == 'progress' && locationTimer == null) {
-      locationTimer = Timer.periodic(const Duration(seconds: 5), (timer) async {
-        final position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-        );
+  //   if (status == 'progress' && locationTimer == null) {
+  //     locationTimer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+  //       final position = await Geolocator.getCurrentPosition(
+  //         desiredAccuracy: LocationAccuracy.high,
+  //       );
 
-        if (widget.selectedRun.truckRef != null) {
-          final truckRef = widget.selectedRun.truckRef!;
-          final lastLocation = GeoPoint(position.latitude, position.longitude);
+  //       if (widget.selectedRun.truckRef != null) {
+  //         final truckRef = widget.selectedRun.truckRef!;
+  //         final lastLocation = GeoPoint(position.latitude, position.longitude);
 
-          truckRef.update({
-            'lastLocation': lastLocation,
-            'geoAddressArray': FieldValue.arrayUnion([lastLocation])
-          });
-        }
-      });
-    }
-  }
+  //         print('Localização atual: $lastLocation');
+  //         // truckRef.update({
+  //         //   'lastLocation': lastLocation,
+  //         //   'geoAddressArray': FieldValue.arrayUnion([lastLocation])
+  //         // });
+  //       }
+  //     });
+  //   }
+  // }
 
-  void stopLocationTracking() {
-    locationTimer?.cancel();
-    locationTimer = null;
-  }
+  // void stopLocationTracking() {
+  //   locationTimer?.cancel();
+  //   locationTimer = null;
+  // }
 
-  @override
-  void didUpdateWidget(GoogleMapsSelectedRun oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    updateLocationTracking();
-  }
+  // @override
+  // void didUpdateWidget(GoogleMapsSelectedRun oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   updateLocationTracking();
+  // }
 
   @override
   void initState() {
     super.initState();
     loadCustomIcons();
-    updateLocationTracking();
+    // updateLocationTracking();
 
     // This will start the Snapshot realmtime updates
     // Will call once and the functions will keep running
@@ -270,7 +271,7 @@ class _GoogleMapsSelectedRun extends State<GoogleMapsSelectedRun> {
               onPressed: () {
                 // Handle button click to start the run
                 if (widget.selectedRun.status == "pending") {
-                  updateLocationTracking();
+                  // updateLocationTracking();
                   widget.selectedRun.updateStatus("progress");
                 }
               },

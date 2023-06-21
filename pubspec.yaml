@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^4.4.2
   flutter_svg: ^2.0.5
   flutter_riverpod: ^2.3.6
+  location: ^4.2.0
   google_maps_flutter: ^2.3.1
   google_maps_widget: ^1.0.5+1
   geolocator: ^9.0.2
