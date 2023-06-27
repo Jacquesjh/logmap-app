@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/routes.dart';
@@ -8,7 +10,7 @@ import 'package:logmap/themes.dart';
 import 'firebase_options.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     const ProviderScope(
@@ -17,24 +19,22 @@ void main() {
   );
 }
 
-/// We are using a StatefulWidget such that we only create the [Future] once,
-/// no matter how many times our widget rebuild.
-/// If we used a [StatelessWidget], in the event where [App] is rebuilt, that
-/// would re-initialize FlutterFire and make our application re-enter loading state,
-/// which is undesired.
 class App extends StatefulWidget {
-  const App({super.key});
+  const App({Key? key}) : super(key: key);
 
   @override
   State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  /// The future is part of the state of our widget. We should not call `initializeApp`
-  /// directly inside [build].
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

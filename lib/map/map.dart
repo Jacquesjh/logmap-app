@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logmap/map/widgets/google_maps_selected_run.dart';
 import 'package:logmap/models/user_model.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
+import 'package:logmap/providers/user_provider.dart';
 import 'package:logmap/shared/botto_nav.dart';
 
 class MapScreen extends ConsumerWidget {
@@ -34,6 +35,7 @@ class MapScreen extends ConsumerWidget {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final user = UserModel.fromSnapshot(snapshot);
+                  ref.read(userProvider.notifier).state = user;
                   // return Text("yesss");
                   return selectedRun != null
                       ? GoogleMapsSelectedRun(

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/models/run_model.dart';
 import 'package:logmap/models/truck_model.dart';
 import 'package:logmap/providers/bottom_nav_bar_provider.dart';
+import 'package:logmap/providers/current_delivery_provider.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
 import 'package:logmap/shared/calculate_run_interval.dart';
@@ -46,6 +47,7 @@ class MyRuns extends ConsumerWidget {
             return TextButton(
               onPressed: () {
                 ref.read(selectedRunProvider.notifier).state = run;
+                ref.read(currentDeliveryProvider.notifier).state = null;
                 ref.read(selectedIndexBottomNavBarProvider.notifier).state = 2;
                 Navigator.pushNamed(context, '/map');
               },

@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logmap/providers/selected_run_provider.dart';
 import 'package:logmap/runs/widgets/all_runs.dart';
 import 'package:logmap/runs/widgets/my_runs.dart';
-import 'package:logmap/services/tracking_service.dart';
 import 'package:logmap/shared/botto_nav.dart';
 
-class RunsScreen extends ConsumerWidget {
+class RunsScreen extends StatelessWidget {
   const RunsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(selectedRunProvider.notifier).state = null;
-
-    // final trackingService = TrackingService(ref);
-
-    // Start the tracking service when the widget is built
-    // trackingService.startTrackingService();
-
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: DefaultTabController(
