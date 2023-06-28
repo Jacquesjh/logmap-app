@@ -15,6 +15,7 @@ class HomeScreen extends ConsumerWidget {
     final trackingService = TrackingService(ref);
     final deliveryManagmentService = DeliveryManagmentService(ref);
 
+    // Start the service to always manage what is the current delivery
     deliveryManagmentService.manageDeliveries();
 
     // Start the tracking service when the widget is built

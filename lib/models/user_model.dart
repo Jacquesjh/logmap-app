@@ -38,9 +38,37 @@ class UserModel {
     required this.ref,
   });
 
-  factory UserModel.fromSnapshot(AsyncSnapshot<DocumentSnapshot> snapshot) {
+  factory UserModel.fromAsyncSnapshot(
+      AsyncSnapshot<DocumentSnapshot> snapshot) {
     final data = snapshot.data!.data() as Map<String, dynamic>?;
     final ref = snapshot.data!.reference;
+
+    if (data == null) {
+      throw Exception("Invalid data format");
+    }
+
+    final address = data['address'] as String;
+    final addressNumber = data['addressNumber'] as String;
+    final city = data['city'] as String;
+    final displayName = data['displayName'] as String;
+    final state = data['state'] as String;
+    final geoAddress = GeoAddress(
+        latitude: data['geoAddress'].latitude,
+        longitude: data['geoAddress'].longitude);
+
+    return UserModel(
+        address: address,
+        addressNumber: addressNumber,
+        city: city,
+        displayName: displayName,
+        geoAddress: geoAddress,
+        state: state,
+        ref: ref);
+  }
+
+  factory UserModel.fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>?;
+    final ref = snapshot.reference;
 
     if (data == null) {
       throw Exception("Invalid data format");

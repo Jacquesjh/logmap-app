@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/models/driver_model.dart';
+import 'package:logmap/models/user_model.dart';
 import 'package:logmap/providers/bottom_nav_bar_provider.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
+import 'package:logmap/providers/user_provider.dart';
 import 'package:logmap/services/auth.dart';
 
 class DriverSelectScreen extends ConsumerStatefulWidget {
@@ -20,12 +22,25 @@ class _DriverSelectScreenState extends ConsumerState<DriverSelectScreen> {
 
   late Stream<QuerySnapshot> driversStream;
 
+  Future<void> fetchUserModel(String? userUid) async {
+    // Fetch the user data
+    final userSnapshot =
+        await FirebaseFirestore.instance.collection('users').doc(userUid).get();
+
+    final userModel = UserModel.fromSnapshot(userSnapshot);
+    ref.read(userProvider.notifier).state = userModel;
+  }
+
   @override
   void initState() {
     super.initState();
 
     final userUid = FirebaseAuth.instance.currentUser?.uid;
 
+    // Fetch the user data
+    fetchUserModel(userUid);
+
+    // Fetch the drivers data
     driversStream = FirebaseFirestore.instance
         .collection('users')
         .doc(userUid)
@@ -41,6 +56,9 @@ class _DriverSelectScreenState extends ConsumerState<DriverSelectScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+                'Empresa ${ref.read(userProvider.notifier).state?.displayName}',
+                style: const TextStyle(fontSize: 20)),
             const Text('Quem é você?', style: TextStyle(fontSize: 20)),
             const SizedBox(height: 16),
             StreamBuilder<QuerySnapshot>(

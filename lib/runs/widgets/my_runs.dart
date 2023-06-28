@@ -23,8 +23,7 @@ class MyRuns extends ConsumerWidget {
           .collection('users')
           .doc(userUid)
           .collection('runs')
-          .where('date', isEqualTo: "2023-06-08")
-          // .where('date', isEqualTo: getCurrentDate())
+          .where('date', isEqualTo: getCurrentDate())
           .where('driverRef',
               isEqualTo: ref.read(selectedDriverProvider.notifier).state?.ref)
           .snapshots(),

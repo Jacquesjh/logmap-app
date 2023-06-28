@@ -6,11 +6,14 @@ import 'package:logmap/routes.dart';
 
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
+import 'package:logmap/services/notification_service.dart';
+import 'package:logmap/shared/ref.dart';
 import 'package:logmap/themes.dart';
 import 'firebase_options.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await NotificationService.initializeNotification();
 
   runApp(
     const ProviderScope(
@@ -19,25 +22,32 @@ void main() {
   );
 }
 
-class App extends StatefulWidget {
+class App extends ConsumerStatefulWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  State<App> createState() => _AppState();
+  ConsumerState<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends ConsumerState<App> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  Future<void> initNotificationService() async {
+    await NotificationService.initializeNotification();
+  }
+
   @override
   void initState() {
     super.initState();
+    initNotificationService();
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.read(dummyProvider);
+
     return FutureBuilder(
       // Initialize FlutterFire:
       future: _initialization,
@@ -56,7 +66,7 @@ class _AppState extends State<App> {
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return const Text('loading');
+        return const CircularProgressIndicator();
       },
     );
   }

@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logmap/providers/current_delivery_provider.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
 import 'package:logmap/providers/user_provider.dart';
+import 'package:logmap/services/notification_service.dart';
 
 class TrackingService {
   // The service will start tracking the location of the device when the
@@ -97,16 +100,18 @@ class TrackingService {
 
       if (ref.read(allDeliveriesCompleteProvider.notifier).state == true) {
         // The truck has no more deliveries to make and it's on it's way back
+        debugPrint(
+            ref.read(allDeliveriesCompleteProvider.notifier).state.toString());
         checkBackToStore(currentPosition);
       }
 
-      print('Current delivery number #${currentDelivery?.number}');
-      print('Latitude: ${currentPosition.latitude}');
-      print('Longitude: ${currentPosition.longitude}');
+      debugPrint('Current delivery number #${currentDelivery?.number}');
+      debugPrint('Latitude: ${currentPosition.latitude}');
+      debugPrint('Longitude: ${currentPosition.longitude}');
     }
   }
 
-  void checkBackToStore(Position currentPosition) {
+  Future<void> checkBackToStore(Position currentPosition) async {
     final user = ref.read(userProvider.notifier).state;
 
     if (user != null) {
@@ -116,13 +121,37 @@ class TrackingService {
           currentPosition.latitude,
           currentPosition.longitude);
 
-      if (distanceToStore < 10) {
-        print('Checking if the truck if back to store...');
+      debugPrint('Distance to the store: $distanceToStore');
+
+      if (distanceToStore < 60) {
+        debugPrint('Checking if the truck if back to store...');
+        await NotificationService.showNotification(
+          title: "Você encerrou a corrida?",
+          body: "Você encerrou a corrida?",
+          summary: "Você encerrou a corrida?",
+          payload: {"finish": "run"},
+          notificationLayout: NotificationLayout.Default,
+          actionType: ActionType.Default,
+          actionButtons: [
+            NotificationActionButton(
+              label: 'Sim',
+              enabled: true,
+              key: 'sim',
+              color: Colors.green[400],
+            ),
+            NotificationActionButton(
+              label: 'Não',
+              enabled: true,
+              key: 'não',
+              color: Colors.red[400],
+            )
+          ],
+        );
       }
     }
   }
 
-  void checkMadeDelivery(Position currentPosition) {
+  Future<void> checkMadeDelivery(Position currentPosition) async {
     final currentDelivery = ref.read(currentDeliveryProvider.notifier).state;
 
     if (currentDelivery != null) {
@@ -132,8 +161,31 @@ class TrackingService {
           currentPosition.latitude,
           currentPosition.longitude);
 
-      if (distanceToCurrentDelivery < 10) {
-        print('Checking if the truck made the delivery...');
+      if (distanceToCurrentDelivery < 60) {
+        debugPrint('Checking if the truck made the delivery...');
+
+        await NotificationService.showNotification(
+          title: 'Você completou a entrega #${currentDelivery.number}?',
+          body: "Você completou a entrega #${currentDelivery.number}?",
+          summary: "Você completou a entrega #${currentDelivery.number}?",
+          payload: {"finish": "currentDelivery"},
+          notificationLayout: NotificationLayout.Default,
+          actionType: ActionType.Default,
+          actionButtons: [
+            NotificationActionButton(
+              label: 'Sim',
+              enabled: true,
+              key: 'sim',
+              color: Colors.green[400],
+            ),
+            NotificationActionButton(
+              label: 'Não',
+              enabled: true,
+              key: 'não',
+              color: Colors.red[400],
+            )
+          ],
+        );
       }
     }
   }

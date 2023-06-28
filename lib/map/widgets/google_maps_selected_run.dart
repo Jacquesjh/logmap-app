@@ -3,20 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_widget/google_maps_widget.dart';
-import 'package:logmap/models/run_model.dart';
 import 'package:logmap/models/truck_model.dart';
 import 'package:logmap/models/delivery_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
+import 'package:logmap/providers/selected_run_provider.dart';
 
 class GoogleMapsSelectedRun extends ConsumerStatefulWidget {
   final GeoAddress userGeoAddress;
-  final Run selectedRun;
 
   const GoogleMapsSelectedRun({
     Key? key,
     required this.userGeoAddress,
-    required this.selectedRun,
   }) : super(key: key);
 
   @override
@@ -59,7 +57,9 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
   }
 
   void subscribeToDeliveryUpdates() {
-    deliveriesRefStream = Stream.value(widget.selectedRun.deliveriesRef);
+    final selectedRun = ref.read(selectedRunProvider.notifier).state;
+
+    deliveriesRefStream = Stream.value(selectedRun!.deliveriesRef);
 
     final currentSubscriptions = [...deliverySubscriptions];
     deliverySubscriptions.clear();
@@ -101,9 +101,10 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
   }
 
   void subscribeToTruckUpdates() {
-    if (widget.selectedRun.truckRef != null) {
-      truckSubscription =
-          widget.selectedRun.truckRef!.snapshots().listen((snapshot) {
+    final selectedRun = ref.read(selectedRunProvider.notifier).state;
+
+    if (selectedRun?.truckRef != null) {
+      truckSubscription = selectedRun!.truckRef!.snapshots().listen((snapshot) {
         final truck = Truck.fromSnapshot(snapshot);
         final truckName = truck.name;
 
@@ -155,6 +156,8 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedRun = ref.watch(selectedRunProvider.notifier).state;
+
     // Add userGeoAddress marker
     markers.add(
       Marker(
@@ -190,9 +193,9 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle button click to start the run
-                  if (widget.selectedRun.status == "pending") {
-                    widget.selectedRun.updateStatus("progress");
-                    widget.selectedRun.truckRef?.update({
+                  if (selectedRun?.status == "pending") {
+                    selectedRun?.updateStatus("progress");
+                    selectedRun?.truckRef?.update({
                       'driverRef':
                           ref.read(selectedDriverProvider.notifier).state?.ref,
                       'currentDateDriversRef': FieldValue.arrayUnion([
@@ -202,11 +205,11 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
                   }
                 },
                 child: Text(
-                  widget.selectedRun.status == "progress"
-                      ? 'Corrida #${widget.selectedRun.number} em andamento'
-                      : widget.selectedRun.status == "pending"
-                          ? 'Começar Corrida #${widget.selectedRun.number}!'
-                          : 'Corrida #${widget.selectedRun.number} completada!',
+                  selectedRun?.status == "progress"
+                      ? 'Corrida #${selectedRun?.number} em andamento'
+                      : selectedRun?.status == "pending"
+                          ? 'Começar Corrida #${selectedRun?.number}!'
+                          : 'Corrida #${selectedRun?.number} completada!',
                   style: const TextStyle(fontSize: 18),
                 ),
               ),
