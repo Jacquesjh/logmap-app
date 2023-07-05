@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logmap/runs/widgets/all_runs.dart';
 import 'package:logmap/runs/widgets/my_runs.dart';
-import 'package:logmap/shared/botto_nav.dart';
+import 'package:logmap/shared/bottom_nav.dart';
 
 class RunsScreen extends StatelessWidget {
   const RunsScreen({Key? key}) : super(key: key);

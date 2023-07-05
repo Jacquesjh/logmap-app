@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/services/auth.dart';
-import 'package:logmap/shared/botto_nav.dart';
+import 'package:logmap/shared/bottom_nav.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);

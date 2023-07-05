@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/models/delivery_model.dart';
 import 'package:logmap/models/client_model.dart';
 import 'package:logmap/providers/current_delivery_provider.dart';
-import 'package:logmap/shared/botto_nav.dart';
+import 'package:logmap/shared/bottom_nav.dart';
 
 class DeliveryDetailsScreen extends ConsumerWidget {
   final Delivery delivery;
