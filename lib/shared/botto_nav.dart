@@ -58,7 +58,7 @@ class BottomNavBar extends ConsumerWidget {
             Navigator.pushNamed(context, '/deliveries');
             break;
           case 2:
-            Navigator.pushNamed(context, '/profile');
+            Navigator.pushNamed(context, '/map');
             break;
           case 3:
             Navigator.pushNamed(context, '/profile');

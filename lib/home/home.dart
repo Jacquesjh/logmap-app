@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/driverSelect/driver_select.dart';
+import 'package:logmap/services/delivery_managment_service.dart';
+import 'package:logmap/services/tracking_service.dart';
 import 'package:logmap/login/login.dart';
 import 'package:logmap/services/auth.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final trackingService = TrackingService(ref);
+    final deliveryManagmentService = DeliveryManagmentService(ref);
+
+    // Start the service to always manage what is the current delivery
+    deliveryManagmentService.manageDeliveries();
+
+    // Start the tracking service when the widget is built
+    trackingService.startTracking();
+
     return StreamBuilder<User?>(
       stream: AuthService()
           .authStateChanges, // Stream to monitor authentication state changes

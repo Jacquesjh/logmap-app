@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/models/delivery_model.dart';
 import 'package:logmap/models/client_model.dart';
+import 'package:logmap/providers/current_delivery_provider.dart';
 import 'package:logmap/shared/botto_nav.dart';
 
-class DeliveryDetailsScreen extends StatelessWidget {
+class DeliveryDetailsScreen extends ConsumerWidget {
   final Delivery delivery;
   final Client client;
 
@@ -14,7 +16,7 @@ class DeliveryDetailsScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       bottomNavigationBar: const BottomNavBar(),
       appBar: AppBar(
@@ -50,6 +52,17 @@ class DeliveryDetailsScreen extends StatelessWidget {
                                     await showConfirmationDialog(context);
                                 if (confirmed) {
                                   await delivery.updateIsComplete(true);
+                                  final currentDelivery = ref
+                                      .read(currentDeliveryProvider.notifier)
+                                      .state;
+
+                                  if (delivery.number ==
+                                      currentDelivery?.number) {
+                                    ref
+                                        .read(currentDeliveryIsCompletedProvider
+                                            .notifier)
+                                        .state = true;
+                                  }
                                 }
                               },
                               child: const Icon(

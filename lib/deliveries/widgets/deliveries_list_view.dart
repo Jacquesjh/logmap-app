@@ -30,7 +30,7 @@ class DeliveriesListView extends StatelessWidget {
               return const Text('Error');
             }
 
-            final delivery = Delivery.fromSnapshot(snapshot);
+            final delivery = Delivery.fromAsyncSnapshot(snapshot);
             final isComplete = delivery.isComplete;
 
             return FutureBuilder<DocumentSnapshot>(

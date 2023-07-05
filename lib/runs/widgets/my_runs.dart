@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/models/run_model.dart';
 import 'package:logmap/models/truck_model.dart';
+import 'package:logmap/providers/bottom_nav_bar_provider.dart';
+import 'package:logmap/providers/current_delivery_provider.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
 import 'package:logmap/shared/calculate_run_interval.dart';
@@ -21,8 +23,7 @@ class MyRuns extends ConsumerWidget {
           .collection('users')
           .doc(userUid)
           .collection('runs')
-          .where('date', isEqualTo: "2023-06-08")
-          // .where('date', isEqualTo: getCurrentDate())
+          .where('date', isEqualTo: getCurrentDate())
           .where('driverRef',
               isEqualTo: ref.read(selectedDriverProvider.notifier).state?.ref)
           .snapshots(),
@@ -45,6 +46,8 @@ class MyRuns extends ConsumerWidget {
             return TextButton(
               onPressed: () {
                 ref.read(selectedRunProvider.notifier).state = run;
+                ref.read(currentDeliveryProvider.notifier).state = null;
+                ref.read(selectedIndexBottomNavBarProvider.notifier).state = 2;
                 Navigator.pushNamed(context, '/map');
               },
               child: Card(
@@ -68,7 +71,8 @@ class MyRuns extends ConsumerWidget {
                                 future: run.truckRef!.get(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    final truck = Truck.fromSnapshot(snapshot);
+                                    final truck =
+                                        Truck.fromAsyncSnapshot(snapshot);
                                     return Text('Caminhão ${truck.name}',
                                         style: const TextStyle(fontSize: 13));
                                   } else if (snapshot.hasError) {
