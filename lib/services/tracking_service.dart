@@ -100,14 +100,8 @@ class TrackingService {
 
       if (ref.read(allDeliveriesCompleteProvider.notifier).state == true) {
         // The truck has no more deliveries to make and it's on it's way back
-        debugPrint(
-            ref.read(allDeliveriesCompleteProvider.notifier).state.toString());
         checkBackToStore(currentPosition);
       }
-
-      debugPrint('Current delivery number #${currentDelivery?.number}');
-      debugPrint('Latitude: ${currentPosition.latitude}');
-      debugPrint('Longitude: ${currentPosition.longitude}');
     }
   }
 
@@ -121,13 +115,11 @@ class TrackingService {
           currentPosition.latitude,
           currentPosition.longitude);
 
-      debugPrint('Distance to the store: $distanceToStore');
-
       if (distanceToStore < 60) {
-        debugPrint('Checking if the truck if back to store...');
         await NotificationService.showNotification(
           title: "Você encerrou a corrida?",
           body: "Você encerrou a corrida?",
+          id: 0,
           summary: "Você encerrou a corrida?",
           payload: {"finish": "run"},
           notificationLayout: NotificationLayout.Default,
@@ -162,11 +154,10 @@ class TrackingService {
           currentPosition.longitude);
 
       if (distanceToCurrentDelivery < 60) {
-        debugPrint('Checking if the truck made the delivery...');
-
         await NotificationService.showNotification(
           title: 'Você completou a entrega #${currentDelivery.number}?',
           body: "Você completou a entrega #${currentDelivery.number}?",
+          id: currentDelivery.number,
           summary: "Você completou a entrega #${currentDelivery.number}?",
           payload: {"finish": "currentDelivery"},
           notificationLayout: NotificationLayout.Default,

@@ -193,8 +193,8 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle button click to start the run
-                  if (selectedRun?.status == "pending") {
-                    selectedRun?.updateStatus("progress");
+                  if (selectedRun?.status == 'pending') {
+                    selectedRun?.ref.update({'status': 'progress'});
                     selectedRun?.truckRef?.update({
                       'driverRef':
                           ref.read(selectedDriverProvider.notifier).state?.ref,
@@ -205,7 +205,7 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
                   }
                 },
                 child: Text(
-                  selectedRun?.status == "progress"
+                  selectedRun?.status == 'progress'
                       ? 'Corrida #${selectedRun?.number} em andamento'
                       : selectedRun?.status == "pending"
                           ? 'Começar Corrida #${selectedRun?.number}!'

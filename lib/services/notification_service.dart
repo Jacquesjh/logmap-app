@@ -20,9 +20,10 @@ class NotificationService {
           ledColor: Colors.white,
           importance: NotificationImportance.Max,
           channelShowBadge: true,
-          onlyAlertOnce: false,
+          onlyAlertOnce: true,
           playSound: true,
           criticalAlerts: true,
+          enableVibration: true,
         )
       ],
       channelGroups: [
@@ -79,7 +80,6 @@ class NotificationService {
       Ref ref = refHolder.ref;
 
       if (payload["finish"] == "run") {
-        debugPrint('The run is complete!');
 
         // Set the run status to complete, Set the truck driverRef to null
         // And set the driver currentTruckRef to null
@@ -93,7 +93,6 @@ class NotificationService {
       }
 
       if (payload["finish"] == "currentDelivery") {
-        debugPrint('The current delivery is complete!');
 
         final currentDelivery =
             ref.read(currentDeliveryProvider.notifier).state;
@@ -108,6 +107,7 @@ class NotificationService {
   static Future<void> showNotification({
     required final String title,
     required final String body,
+    final int id = -1,
     final bool scheduled = false,
     final String? summary,
     final Map<String, String>? payload,
@@ -122,7 +122,7 @@ class NotificationService {
 
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: -1,
+        id: id,
         channelKey: 'notifications_channel',
         title: title,
         body: body,
@@ -132,6 +132,7 @@ class NotificationService {
         category: category,
         payload: payload,
         bigPicture: bigPicture,
+        wakeUpScreen: true,
       ),
       actionButtons: actionButtons,
       schedule: scheduled

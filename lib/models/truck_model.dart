@@ -6,7 +6,7 @@ class Truck {
   final List<DocumentReference> activeDeliveriesRef;
   final List<DocumentReference> completedDeliveriesRef;
   final DocumentReference? driverRef;
-  final List<GeoAddress> geoAddressArray;
+  final List<GeoAddress?> geoAddressArray;
   final DocumentReference historyRef;
   final GeoAddress lastLocation;
   final String licensePlate;
@@ -45,11 +45,14 @@ class Truck {
     final driverRef = data['driverRef'] as DocumentReference?;
 
     final geoAddressArrayJson = data['geoAddressArray'] as List<dynamic>;
-    final geoAddressArray = geoAddressArrayJson
-        .map((geoAddressJson) => GeoAddress(
-            latitude: geoAddressJson.latitude,
-            longitude: geoAddressJson.longitude))
-        .toList();
+    final geoAddressArray = geoAddressArrayJson.isEmpty
+        ? <GeoAddress>[] // Create an empty list
+        : geoAddressArrayJson
+            .map((geoAddressJson) => GeoAddress(
+                  latitude: geoAddressJson.latitude,
+                  longitude: geoAddressJson.longitude,
+                ))
+            .toList();
 
     final historyRef = data['historyRef'] as DocumentReference;
     final lastLocation = GeoAddress(
