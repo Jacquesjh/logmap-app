@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logmap/driverSelect/driver_select.dart';
+import 'package:logmap/screens/driverSelect/driver_select.dart';
 import 'package:logmap/services/delivery_managment_service.dart';
 import 'package:logmap/services/tracking_service.dart';
-import 'package:logmap/login/login.dart';
+import 'package:logmap/screens/login/login.dart';
 import 'package:logmap/services/auth.dart';
 
 class HomeScreen extends ConsumerWidget {

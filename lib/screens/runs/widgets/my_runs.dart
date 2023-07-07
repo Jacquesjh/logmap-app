@@ -8,8 +8,8 @@ import 'package:logmap/providers/bottom_nav_bar_provider.dart';
 import 'package:logmap/providers/current_delivery_provider.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
-import 'package:logmap/shared/calculate_run_interval.dart';
-import 'package:logmap/shared/get_current_date.dart';
+import 'package:logmap/shared/functions/calculate_run_interval.dart';
+import 'package:logmap/shared/functions/get_current_date.dart';
 
 class MyRuns extends ConsumerWidget {
   const MyRuns({Key? key}) : super(key: key);
