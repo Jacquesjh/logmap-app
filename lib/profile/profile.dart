@@ -4,6 +4,8 @@ import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/services/auth.dart';
 import 'package:logmap/shared/bottom_nav.dart';
 
+import '../providers/bottom_nav_bar_provider.dart';
+
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -43,6 +45,7 @@ class ProfileScreen extends ConsumerWidget {
                   await AuthService().signOut();
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil('/', (route) => false);
+                  ref.read(selectedIndexBottomNavBarProvider.notifier).state = 0; //runs
                 },
                 child: const Text('Sair'),
               ),
