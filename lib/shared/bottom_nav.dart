@@ -50,7 +50,10 @@ class BottomNavBar extends ConsumerWidget {
       onTap: (int index) {
         ref.read(selectedIndexBottomNavBarProvider.notifier).state =
             index; // Update the selected index
-        switch (index) {
+
+        var bottoSelect = index != currentIndex ? index : null;    
+
+        switch (bottoSelect) {
           case 0:
             Navigator.pushNamed(context, '/runs');
             break;
@@ -62,6 +65,8 @@ class BottomNavBar extends ConsumerWidget {
             break;
           case 3:
             Navigator.pushNamed(context, '/profile');
+            break;
+          default:
             break;
         }
       },
