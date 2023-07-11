@@ -13,32 +13,33 @@ class BottomNavBar extends ConsumerWidget {
 
     return BottomNavigationBar(
       currentIndex: currentIndex,
+      type: BottomNavigationBarType.fixed, // Maximum of 4 items to avoid resizing
       items: const [
         BottomNavigationBarItem(
           icon: Icon(
             FontAwesomeIcons.truckFast,
-            size: 20,
+            size: 15,
           ),
           label: 'Corridas',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             FontAwesomeIcons.boxesPacking,
-            size: 20,
+            size: 15,
           ),
           label: 'Pedidos',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             FontAwesomeIcons.solidMap,
-            size: 20,
+            size: 15,
           ),
           label: 'Mapa',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             FontAwesomeIcons.solidUser,
-            size: 20,
+            size: 15,
           ),
           label: 'Perfil',
         ),
@@ -47,6 +48,7 @@ class BottomNavBar extends ConsumerWidget {
           .primaryColor, // Use the primary color of your theme for highlighting
       unselectedItemColor:
           Colors.white, // Adjust the color for unselected items
+      iconSize: 15,
       onTap: (int index) {
         ref.read(selectedIndexBottomNavBarProvider.notifier).state =
             index; // Update the selected index
