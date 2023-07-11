@@ -1,6 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DummyNotifier extends Notifier<bool> {
+  // This is necessary because the notification service is OUTSIDE of the
+  // ProviderScope in the main.dart. We use this so give the notification service
+  // access to the providers.
+  //
+  // https://stackoverflow.com/questions/72521691/riverpod-in-a-class-or-outside-of-build-method
+
   @override
   bool build() {
     refHolder = RefHolder._(ref);

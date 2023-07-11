@@ -1,10 +1,10 @@
-import 'package:logmap/deliveries/deliveries.dart';
-import 'package:logmap/driverSelect/driver_select.dart';
-import 'package:logmap/home/home.dart';
-import 'package:logmap/login/login.dart';
-import 'package:logmap/map/map.dart';
-import 'package:logmap/profile/profile.dart';
-import 'package:logmap/runs/runs.dart';
+import 'package:logmap/screens/home/home.dart';
+import 'package:logmap/screens/deliveries/deliveries.dart';
+import 'package:logmap/screens/driverSelect/driver_select.dart';
+import 'package:logmap/screens/login/login.dart';
+import 'package:logmap/screens/map/map.dart';
+import 'package:logmap/screens/profile/profile.dart';
+import 'package:logmap/screens/runs/runs.dart';
 
 var appRoutes = {
   '/': (context) => const HomeScreen(),

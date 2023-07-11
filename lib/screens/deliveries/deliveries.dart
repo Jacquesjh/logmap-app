@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logmap/deliveries/widgets/deliveries_list_view.dart';
+import 'package:logmap/screens/deliveries/widgets/deliveries_list_view.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
-import 'package:logmap/shared/bottom_nav.dart';
+import 'package:logmap/shared/widgets/bottom_nav.dart';
 
 class DeliveriesScreen extends ConsumerWidget {
   const DeliveriesScreen({Key? key}) : super(key: key);
