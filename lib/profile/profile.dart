@@ -5,12 +5,35 @@ import 'package:logmap/services/auth.dart';
 import 'package:logmap/shared/bottom_nav.dart';
 
 import '../providers/bottom_nav_bar_provider.dart';
+import '../providers/current_delivery_provider.dart';
+import '../providers/selected_run_provider.dart';
+import '../providers/user_provider.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+ 
+    void resetProviders() {
+      //bottom_nav_bar_provider.dart
+      ref.read(selectedIndexBottomNavBarProvider.notifier).state = 0;
+      
+      //current_delivery_provider.dart
+      ref.read(currentDeliveryProvider.notifier).state = null;
+      ref.read(currentDeliveryIsCompletedProvider.notifier).state = false;
+      ref.read(allDeliveriesCompleteProvider.notifier).state = false;
+
+      //driver_select_provider.dart
+      ref.read(selectedDriverProvider.notifier).state = null;
+
+      //selected_run_provider.dart
+      ref.read(selectedRunProvider.notifier).state = null;
+
+      //user_provider.dart
+      ref.read(userProvider.notifier).state = null;
+    }
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -45,7 +68,7 @@ class ProfileScreen extends ConsumerWidget {
                   await AuthService().signOut();
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil('/', (route) => false);
-                  ref.read(selectedIndexBottomNavBarProvider.notifier).state = 0; //runs
+                  resetProviders();
                 },
                 child: const Text('Sair'),
               ),
