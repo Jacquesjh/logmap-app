@@ -79,9 +79,7 @@ class UserModel {
     final city = data['city'] as String;
     final displayName = data['displayName'] as String;
     final state = data['state'] as String;
-    final geoAddress = GeoAddress(
-        latitude: data['geoAddress'].latitude,
-        longitude: data['geoAddress'].longitude);
+    final geoAddress = GeoAddress.fromSnapshot(data['geoAddress']);
 
     return UserModel(
         address: address,
