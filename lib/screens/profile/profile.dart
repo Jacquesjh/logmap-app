@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/services/auth.dart';
 import 'package:logmap/shared/widgets/bottom_nav.dart';
 
-import '../providers/bottom_nav_bar_provider.dart';
-import '../providers/current_delivery_provider.dart';
-import '../providers/selected_run_provider.dart';
-import '../providers/user_provider.dart';
+import 'package:logmap/providers/driver_select_provider.dart';
+import 'package:logmap/providers/bottom_nav_bar_provider.dart';
+import 'package:logmap/providers/current_delivery_provider.dart';
+import 'package:logmap/providers/selected_run_provider.dart';
+import 'package:logmap/providers/user_provider.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
