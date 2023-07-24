@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:logmap/map/widgets/google_maps_selected_run.dart';
+import 'package:logmap/screens/map/widgets/google_maps_selected_run.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
 import 'package:logmap/providers/user_provider.dart';
-import 'package:logmap/shared/bottom_nav.dart';
+import 'package:logmap/shared/widgets/bottom_nav.dart';
 
 class MapScreen extends ConsumerWidget {
   const MapScreen({Key? key}) : super(key: key);

@@ -13,7 +13,6 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await NotificationService.initializeNotification();
 
   runApp(
     const ProviderScope(

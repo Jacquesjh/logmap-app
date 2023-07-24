@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:logmap/deliveries/widgets/delivery_details_screen.dart';
+import 'package:logmap/screens/deliveries/widgets/delivery_details_screen.dart';
 import 'package:logmap/models/client_model.dart';
 import 'package:logmap/models/delivery_model.dart';
 
