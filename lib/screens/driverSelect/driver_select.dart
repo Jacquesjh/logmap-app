@@ -56,9 +56,6 @@ class _DriverSelectScreenState extends ConsumerState<DriverSelectScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-                'Empresa ${ref.read(userProvider.notifier).state?.displayName}',
-                style: const TextStyle(fontSize: 20)),
             const Text('Quem é você?', style: TextStyle(fontSize: 20)),
             const SizedBox(height: 16),
             StreamBuilder<QuerySnapshot>(
