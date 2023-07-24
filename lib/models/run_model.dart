@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Run {
@@ -37,10 +36,10 @@ class Run {
       deliveriesRef:
           (data['deliveriesRef'] as List<dynamic>).cast<DocumentReference>(),
       driverRef: data['driverRef'] as DocumentReference?,
-      notes: (data['notes'] as List<dynamic>)
-          .map((noteData) =>
-              Note(content: noteData.content, isComplete: noteData.isComplete))
-          .toList(),
+      notes: (data['notes'] as List<dynamic>).map((noteData) {
+        return Note(
+            content: [noteData as String]); // Convert string to List<String>
+      }).toList(),
       ref: snapshot.reference,
       route: (data['route'] as List<dynamic>)
           .map((ref) => ref is DocumentReference ? ref : ref.toString())
@@ -60,8 +59,7 @@ class Run {
 }
 
 class Note {
-  final String content;
-  final Bool isComplete;
+  final List<String> content;
 
-  Note({required this.content, required this.isComplete});
+  Note({required this.content});
 }
