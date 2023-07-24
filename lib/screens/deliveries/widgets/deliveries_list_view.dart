@@ -72,26 +72,26 @@ class DeliveriesListView extends StatelessWidget {
                                 )
                               : const Icon(
                                   Icons.check_box_outline_blank,
-                                  color: Color.fromARGB(255, 8, 215, 242),
+                                  color: Color(0xFF08F26E),
                                   size: 30,
                                 ),
                         ),
-                        title: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Pedido #${delivery.number}',
                               style: const TextStyle(fontSize: 18),
                             ),
                             Text(
-                              ' de ${client.name}',
-                              style: const TextStyle(fontSize: 15),
+                              client.name,
+                              style: const TextStyle(fontSize: 14),
                             ),
                           ],
                         ),
                         subtitle: Text(
                           delivery.expectedDeliveryInterval,
+                          style: const TextStyle(fontSize: 12),
                         ),
                       ),
                     ),
