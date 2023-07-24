@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logmap/services/auth.dart';
-import 'package:logmap/shared/custom_passwordfield.dart';
-import 'package:logmap/shared/custom_textfield.dart';
+import 'package:logmap/shared/widgets/custom_passwordfield.dart';
+import 'package:logmap/shared/widgets/custom_textfield.dart';
 import 'package:logmap/shared/icons.dart';
 
 class EmailPasswordLogin extends StatefulWidget {

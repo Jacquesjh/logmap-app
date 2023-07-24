@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/services/auth.dart';
-import 'package:logmap/shared/bottom_nav.dart';
+import 'package:logmap/shared/widgets/bottom_nav.dart';
 
 import '../providers/bottom_nav_bar_provider.dart';
 import '../providers/current_delivery_provider.dart';
