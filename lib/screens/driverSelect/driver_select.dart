@@ -117,6 +117,7 @@ class _DriverSelectScreenState extends ConsumerState<DriverSelectScreen> {
                 await AuthService().signOut();
                 ref.read(selectedIndexBottomNavBarProvider.notifier).state = 0;
 
+                // ignore: use_build_context_synchronously
                 Navigator.pushNamed(
                   context,
                   '/',

@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_widget/google_maps_widget.dart';
 import 'package:logmap/models/run_model.dart';
 import 'package:logmap/models/truck_model.dart';
@@ -42,7 +40,6 @@ class _GoogleMapsSelectedRunWithRoutes
 
   void updateCurrentDestination() {
     if (widget.selectedRun.status == "progress") {
-      Delivery? currentDelivery;
 
       for (final deliveryRef in widget.selectedRun.route) {
         if (deliveryRef is DocumentReference) {
@@ -50,7 +47,6 @@ class _GoogleMapsSelectedRunWithRoutes
 
           if (delivery != null) {
             if (!delivery.isComplete) {
-              currentDelivery = delivery;
               break;
             }
           }

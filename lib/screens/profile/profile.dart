@@ -66,6 +66,7 @@ class ProfileScreen extends ConsumerWidget {
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () async {
                   await AuthService().signOut();
+                  // ignore: use_build_context_synchronously
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil('/', (route) => false);
                   resetProviders();
