@@ -38,7 +38,8 @@ class Run {
       driverRef: data['driverRef'] as DocumentReference?,
       notes: (data['notes'] as List<dynamic>).map((noteData) {
         return Note(
-            content: [noteData as String]); // Convert string to List<String>
+          content: [noteData.toString()] // Convert dynamic to String
+        );
       }).toList(),
       ref: snapshot.reference,
       route: (data['route'] as List<dynamic>)
