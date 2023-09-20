@@ -116,7 +116,7 @@ class _DriverSelectScreenState extends ConsumerState<DriverSelectScreen> {
               child: const Text(
                 'Continuar',
                 style: TextStyle(
-                  color: Colors.white, // Set the text color to white
+                  color: Colors.white,
                 ),
               ),
             ),
