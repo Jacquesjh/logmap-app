@@ -109,7 +109,16 @@ class _DriverSelectScreenState extends ConsumerState<DriverSelectScreen> {
                       );
                     }
                   : null,
-              child: const Text('Continuar'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Colors.greenAccent.shade700),
+              ),
+              child: const Text(
+                'Continuar',
+                style: TextStyle(
+                  color: Colors.white, // Set the text color to white
+                ),
+              ),
             ),
             const SizedBox(height: 1),
             ElevatedButton(
