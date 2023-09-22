@@ -206,8 +206,7 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
                         ),
                         child: FloatingActionButton(
                           onPressed: () {
-                            // Add your logic for the new button here
-                            // This button will be above the existing button
+                            Navigator.pushNamed(context, '/deliveryRoute');
                           },
                           backgroundColor: const Color(0xFF08F26E),
                           child: const Icon(
