@@ -190,46 +190,86 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
         SafeArea(
           child: Align(
             alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(right: 300.0, bottom: 40.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.black, // Set the background color as black
-                ),
-                padding: const EdgeInsets.all(2.0),
-                child: FloatingActionButton(
-                  onPressed: () {
-                    // Handle button click to start the run
-                    if (selectedRun.status == 'pending') {
-                      selectedRun.ref.update({'status': 'progress'});
-                      selectedRun.truckRef?.update({
-                        'driverRef': ref
-                            .read(selectedDriverProvider.notifier)
-                            .state
-                            ?.ref,
-                        'currentDateDriversRef': FieldValue.arrayUnion([
-                          ref.read(selectedDriverProvider.notifier).state?.ref
-                        ])
-                      });
-                    }
-
-                    playRunButton[selectedRun.number] = true;
-                    ref.read(runPlayMapButtonProvider.notifier).state = playRunButton;
-                  },
-                  backgroundColor: const Color(0xFF08F26E),
-                  child: Icon(
-                    ref.read(runPlayMapButtonProvider.notifier).state[selectedRun!.number] == true
-                        ? Icons.pause 
-                        : Icons.play_arrow,
-                    size: 30,
-                    color: const Color.fromARGB(255, 61, 60, 60),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 300.0, bottom: 10.0),
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 61, 60, 60),
+                              width: 2.0),
+                        ),
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            // Add your logic for the new button here
+                            // This button will be above the existing button
+                          },
+                          backgroundColor: const Color(0xFF08F26E),
+                          child: const Icon(
+                            Icons.local_shipping,
+                            size: 30,
+                            color: Color.fromARGB(255, 61, 60, 60),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 300.0, bottom: 40.0),
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 61, 60, 60),
+                              width: 2.0),
+                        ),
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            // Handle button click to start the run
+                            if (selectedRun.status == 'pending') {
+                              selectedRun.ref.update({'status': 'progress'});
+                              selectedRun.truckRef?.update({
+                                'driverRef': ref
+                                    .read(selectedDriverProvider.notifier)
+                                    .state
+                                    ?.ref,
+                                'currentDateDriversRef': FieldValue.arrayUnion([
+                                  ref
+                                      .read(selectedDriverProvider.notifier)
+                                      .state
+                                      ?.ref
+                                ])
+                              });
+                            }
+                            playRunButton[selectedRun.number] = true;
+                            ref.read(runPlayMapButtonProvider.notifier).state =
+                                playRunButton;
+                          },
+                          backgroundColor: const Color(0xFF08F26E),
+                          child: Icon(
+                            ref.read(runPlayMapButtonProvider.notifier).state[selectedRun!.number] == true
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                            size: 30,
+                            color: const Color.fromARGB(255, 61, 60, 60),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-        )
+        ),
       ]),
     );
   }
