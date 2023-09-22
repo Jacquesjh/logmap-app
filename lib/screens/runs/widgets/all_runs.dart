@@ -105,7 +105,7 @@ class AllRuns extends ConsumerWidget {
                                   final truck =
                                       Truck.fromAsyncSnapshot(snapshot);
                                   return Text(
-                                    'Caminhão ${truck.name}',
+                                    truck.name,
                                     style: TextStyle(
                                         fontSize: 13,
                                         color: completedRunNumbers
@@ -179,7 +179,7 @@ class AllRuns extends ConsumerWidget {
                               },
                             ),
                       Text(
-                        'Número de pedidos: ${run.deliveriesRef.length}',
+                        'Número de \npedidos: ${run.deliveriesRef.length}',
                         style: TextStyle(
                             fontSize: 13,
                             color: completedRunNumbers.contains(run.number)

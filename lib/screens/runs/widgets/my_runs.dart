@@ -97,7 +97,7 @@ class MyRuns extends ConsumerWidget {
                     children: [
                       run.truckRef == null
                           ? Text(
-                              'Sem caminhão',
+                              'Sem veículo',
                               style: TextStyle(
                                   fontSize: 13,
                                   color: run.status == "completed"
@@ -111,7 +111,7 @@ class MyRuns extends ConsumerWidget {
                                   final truck =
                                       Truck.fromAsyncSnapshot(snapshot);
                                   return Text(
-                                    'Caminhão ${truck.name}',
+                                    truck.name,
                                     style: TextStyle(
                                         fontSize: 13,
                                         color: run.status == "completed"
@@ -165,7 +165,7 @@ class MyRuns extends ConsumerWidget {
                                       color: Color.fromARGB(255, 8, 215, 242)))
                               : const Text('Completo',
                                   style: TextStyle(color: Colors.white38)),
-                      Text('Número de pedidos: ${run.deliveriesRef.length}',
+                      Text('Número de \npedidos: ${run.deliveriesRef.length}',
                           style: TextStyle(
                               fontSize: 13,
                               color: run.status == "completed"

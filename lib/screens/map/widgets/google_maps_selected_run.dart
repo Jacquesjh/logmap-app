@@ -157,6 +157,8 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
   @override
   Widget build(BuildContext context) {
     final selectedRun = ref.watch(selectedRunProvider.notifier).state;
+    Map<int, bool> playRunButton =
+        ref.read(runPlayMapButtonProvider.notifier).state;
 
     // Add userGeoAddress marker
     markers.add(
@@ -189,28 +191,40 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle button click to start the run
-                  if (selectedRun?.status == 'pending') {
-                    selectedRun?.ref.update({'status': 'progress'});
-                    selectedRun?.truckRef?.update({
-                      'driverRef':
-                          ref.read(selectedDriverProvider.notifier).state?.ref,
-                      'currentDateDriversRef': FieldValue.arrayUnion([
-                        ref.read(selectedDriverProvider.notifier).state?.ref
-                      ])
-                    });
-                  }
-                },
-                child: Text(
-                  selectedRun?.status == 'progress'
-                      ? 'Corrida #${selectedRun?.number} em andamento'
-                      : selectedRun?.status == "pending"
-                          ? 'Começar Corrida #${selectedRun?.number}!'
-                          : 'Corrida #${selectedRun?.number} completada!',
-                  style: const TextStyle(fontSize: 18),
+              padding: EdgeInsets.only(right: 300.0, bottom: 40.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black, // Set the background color as black
+                ),
+                padding: const EdgeInsets.all(2.0),
+                child: FloatingActionButton(
+                  onPressed: () {
+                    // Handle button click to start the run
+                    if (selectedRun.status == 'pending') {
+                      selectedRun.ref.update({'status': 'progress'});
+                      selectedRun.truckRef?.update({
+                        'driverRef': ref
+                            .read(selectedDriverProvider.notifier)
+                            .state
+                            ?.ref,
+                        'currentDateDriversRef': FieldValue.arrayUnion([
+                          ref.read(selectedDriverProvider.notifier).state?.ref
+                        ])
+                      });
+                    }
+
+                    playRunButton[selectedRun.number] = true;
+                    ref.read(runPlayMapButtonProvider.notifier).state = playRunButton;
+                  },
+                  backgroundColor: const Color(0xFF08F26E),
+                  child: Icon(
+                    ref.read(runPlayMapButtonProvider.notifier).state[selectedRun!.number] == true
+                        ? Icons.pause 
+                        : Icons.play_arrow,
+                    size: 30,
+                    color: const Color.fromARGB(255, 61, 60, 60),
+                  ),
                 ),
               ),
             ),

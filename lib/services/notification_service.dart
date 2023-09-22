@@ -90,6 +90,7 @@ class NotificationService {
         await run?.ref.update({'status': 'completed'});
         await driver?.ref.update({'currentTruckRef': null});
         await truckRef?.update({'driverRef': null});
+        ref.read(runPlayMapButtonProvider.notifier).state.remove(run?.number);
       }
 
       if (payload["finish"] == "currentDelivery") {

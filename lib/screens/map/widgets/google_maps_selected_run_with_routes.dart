@@ -52,31 +52,6 @@ class _GoogleMapsSelectedRunWithRoutes
           }
         }
       }
-
-      // Check if the current destination is the same
-      // If it is not, then rebuild the Widget.
-      //   if (currentDelivery is Delivery) {
-      //     final currentDeliveryLatLng = LatLng(
-      //         currentDelivery.geoAddress.latitude,
-      //         currentDelivery.geoAddress.longitude);
-      //     if (currentDeliveryLatLng == currentDestination) {
-      //       return;
-      //     } else {
-      //       lastDestination = currentDestination;
-      //       currentDestination = currentDeliveryLatLng;
-      //     }
-      //   } else {
-      //     final userLatLng = LatLng(
-      //         widget.userGeoAddress.latitude, widget.userGeoAddress.longitude);
-      //     if (currentDestination != userLatLng) {
-      //       lastDestination = currentDestination;
-      //       currentDestination = LatLng(
-      //           widget.userGeoAddress.latitude, widget.userGeoAddress.longitude);
-      //     } else {}
-
-      //     // There were no incomplete deliveries left to the run
-      //     // Check if the driver
-      //   }
     }
   }
 
