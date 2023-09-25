@@ -26,18 +26,18 @@ class DeliveryDetailsScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(0),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
+                //borderRadius: BorderRadius.circular(12),
               ),
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(5.0), 
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       delivery.isComplete
@@ -67,69 +67,76 @@ class DeliveryDetailsScreen extends ConsumerWidget {
                               },
                               child: const Icon(
                                 Icons.check_box_outline_blank,
-                                color: Color.fromARGB(255, 8, 215, 242),
+                                color: Color(0xFF08F26E),
                                 size: 50,
                               ),
                             ),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Pedido #${delivery.number}',
+                            'Entrega #${delivery.number}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            'de ${client.name}',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                            ),
-                          ),
                         ],
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Entregar entre ${delivery.expectedDeliveryInterval}',
+                  //const SizedBox(height: 5), 
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: ListTile(
+                      title: Text(
+                        client.name,
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 18,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
-                      Text(
-                        '${delivery.address}, ${delivery.addressNumber}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                        ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${delivery.address}, ${delivery.addressNumber}',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            '${delivery.city}, ${delivery.state}',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Text(
+                            delivery.expectedDeliveryInterval,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        '${delivery.city}, ${delivery.state}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ),  
                 ],
               ),
             ),
           ),
           const Divider(
-            height: 2,
+            height: 4,
             color: Color(0xFF08F26E),
-            thickness: 3,
-            indent: 15,
-            endIndent: 15,
+            thickness: 2,
+            indent: 0,
+            endIndent: 0,
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),

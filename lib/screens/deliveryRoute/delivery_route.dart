@@ -8,6 +8,7 @@ import 'package:logmap/screens/deliveries/widgets/delivery_details_screen.dart';
 import 'package:logmap/models/client_model.dart';
 import 'package:logmap/models/delivery_model.dart';
 import 'package:logmap/shared/functions/get_current_date.dart';
+import 'package:logmap/shared/widgets/bottom_nav.dart';
 
 List<int> completedRunNumbers = [];
 
@@ -43,6 +44,7 @@ class DeliveryRouteScreen extends ConsumerWidget {
         List<dynamic> deliveriesRef = run.route;
         
         return Scaffold(
+          bottomNavigationBar: const BottomNavBar(),
           appBar: AppBar(
             title: const Text('Rota de Entrega'),
           ),
@@ -133,13 +135,5 @@ class DeliveryRouteScreen extends ConsumerWidget {
         );
       }  
     );
-  }
-
-  void completedRunsProviderUpdate(Run run, WidgetRef ref) async {
-    if (run.status == "completed" &&
-        !completedRunNumbers.contains(run.number)) {
-      completedRunNumbers.add(run.number);
-    }
-    ref.read(completedRunsProvider.notifier).state = completedRunNumbers;
   }
 }

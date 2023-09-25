@@ -210,7 +210,7 @@ class _GoogleMapsSelectedRun extends ConsumerState<GoogleMapsSelectedRun> {
                           },
                           backgroundColor: const Color(0xFF08F26E),
                           child: const Icon(
-                            Icons.local_shipping,
+                            Icons.moving,
                             size: 30,
                             color: Color.fromARGB(255, 61, 60, 60),
                           ),
