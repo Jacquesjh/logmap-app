@@ -8,7 +8,7 @@ import 'package:logmap/providers/driver_select_provider.dart';
 import 'package:logmap/shared/functions/calculate_run_interval.dart';
 import 'package:logmap/shared/functions/get_current_date.dart';
 
-import '../../../providers/selected_run_provider.dart';
+import 'package:logmap/providers/selected_run_provider.dart';
 
 List<int> completedRunNumbers = [];
 

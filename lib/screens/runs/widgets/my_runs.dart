@@ -1,3 +1,4 @@
+import 'dart:isolate';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,11 +7,13 @@ import 'package:logmap/models/run_model.dart';
 import 'package:logmap/models/truck_model.dart';
 import 'package:logmap/shared/functions/calculate_run_interval.dart';
 import 'package:logmap/shared/functions/get_current_date.dart';
+import 'package:logmap/services/tracking_service.dart';
 
-import '../../../providers/bottom_nav_bar_provider.dart';
-import '../../../providers/current_delivery_provider.dart';
-import '../../../providers/driver_select_provider.dart';
-import '../../../providers/selected_run_provider.dart';
+import 'package:logmap/providers/bottom_nav_bar_provider.dart';
+import 'package:logmap/providers/current_delivery_provider.dart';
+import 'package:logmap/providers/driver_select_provider.dart';
+import 'package:logmap/providers/selected_run_provider.dart';
+import 'package:flutter_isolate/flutter_isolate.dart';
 
 List<int> completedRunNumbers = [];
 
@@ -20,6 +23,7 @@ class MyRuns extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userUid = FirebaseAuth.instance.currentUser?.uid;
+    final receivePort = ReceivePort();
 
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
@@ -73,6 +77,30 @@ class MyRuns extends ConsumerWidget {
                                   .read(selectedIndexBottomNavBarProvider
                                       .notifier)
                                   .state = 2;
+                              // COMMENT: SPAWN ISOLATE FOR TRACKING
+                              /*
+                              if (run.truckRef != null &&
+                                  run.status == "progress") {                               
+                                final isolate = await FlutterIsolate.spawn(locationCallBack, {
+                                  'collectionPath': 'trucks',//'firestore': FirebaseFirestore.instance,
+                                  'sendPort': receivePort.sendPort,
+                                  'truckID': run.truckRef?.id,
+                                });
+                              }
+
+                              receivePort.listen((message) {
+                                final double updatedLatitude =
+                                    message['latitude'];
+                                final double updatedLongitude =
+                                    message['longitude'];
+
+                                // Handle the message, which includes updated latitude, longitude.
+                                debugPrint(
+                                    'Updated Latitude: $updatedLatitude');
+                                debugPrint(
+                                    'Updated Longitude: $updatedLongitude');
+                              });
+                              */
                               Navigator.pushNamed(context, '/map');
                             }
                           : null,

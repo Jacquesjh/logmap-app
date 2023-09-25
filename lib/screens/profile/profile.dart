@@ -40,7 +40,7 @@ class ProfileScreen extends ConsumerWidget {
         bottomNavigationBar: const BottomNavBar(),
         appBar: AppBar(
           automaticallyImplyLeading: false, // Disable the back arrow
-          title: const Text('Perfil do Motorista'),
+          title: const Text('Perfil'),
         ),
         body: Center(
           child: Column(

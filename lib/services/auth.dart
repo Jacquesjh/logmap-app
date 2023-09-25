@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logmap/shared/show_snackbar.dart';
 
@@ -39,7 +40,9 @@ class AuthService {
       await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (e) {
       // Handle error
-      print('An error occurred during sign out: ${e.message}');
+      if (kDebugMode) {
+        print('An error occurred during sign out: ${e.message}');
+      }
     }
   }
 }

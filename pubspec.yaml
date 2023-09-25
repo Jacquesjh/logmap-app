@@ -42,13 +42,15 @@ dependencies:
   flutter_riverpod: ^2.3.6
 
   firebase_core: ^2.10.0
-  cloud_firestore: ^4.5.2
+  cloud_firestore: ^4.9.2
   firebase_auth: ^4.4.2
 
   google_maps_flutter: ^2.3.1
   google_maps_widget: ^1.0.5+1
   google_maps_routes: ^1.1.2
   geolocator: ^9.0.2
+  flutter_isolate: ^2.0.4
+  permission_handler: ^11.0.0
 
 dev_dependencies:
   flutter_test:

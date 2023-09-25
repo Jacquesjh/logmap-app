@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:isolate';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,9 @@ import 'package:logmap/providers/current_delivery_provider.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
 import 'package:logmap/providers/user_provider.dart';
 import 'package:logmap/services/notification_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import '../firebase_options.dart';
 
 class TrackingService {
   // The service will start tracking the location of the device when the
@@ -92,6 +96,8 @@ class TrackingService {
         'lastLocation': geopoint,
         'geoAddressArray': FieldValue.arrayUnion([geopoint])
       });
+
+      // COMMENT: COMENTANDO PARA TENTAR REALIZAR GEOLOC NO BACKGROUND, CODIGO IMPORTANTE ABAIXO
 
       if (currentDelivery != null) {
         // The truck is going to a make a delivery
@@ -180,4 +186,38 @@ class TrackingService {
       }
     }
   }
+}
+
+@pragma('vm:entry-point')
+void locationCallBack(Map<String, dynamic> port) async {
+  // Handle location updates in the background
+  
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  Map<String, dynamic> data = port;
+
+  final String truckID = data['truckID'];
+
+  Geolocator.getPositionStream(
+          locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.best, distanceFilter: 5))
+      .listen((Position currentPosition) async {
+    final geopoint =
+        GeoPoint(currentPosition.latitude, currentPosition.longitude);
+
+    final DocumentReference truckRef =
+        FirebaseFirestore.instance.collection('trucks').doc(truckID);
+    await truckRef.update({
+      'lastLocation': geopoint,
+      'geoAddressArray': FieldValue.arrayUnion([geopoint])
+    });
+    final SendPort mainSendPort = data['mainSendPort'];
+    final Map<String, dynamic> resultData = {
+      'latitude': currentPosition.latitude,
+      'longitude': currentPosition.longitude,
+    };
+    mainSendPort.send(resultData);
+  });
 }

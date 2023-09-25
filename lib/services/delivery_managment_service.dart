@@ -18,7 +18,6 @@ class DeliveryManagmentService {
         final delivery = Delivery.fromSnapshot(deliverySnapshot);
 
         if (delivery.isComplete == false) {
-          print('Current Delivery number: ${delivery.number}');
           ref.read(currentDeliveryProvider.notifier).state = delivery;
           ref.read(currentDeliveryIsCompletedProvider.notifier).state = false;
           ref.read(allDeliveriesCompleteProvider.notifier).state = false;
@@ -36,7 +35,6 @@ class DeliveryManagmentService {
 
   void manageDeliveries() {
     ref.listen<Run?>(selectedRunProvider, (previous, next) {
-      print("The selected Run changed!");
       findCurrentDelivery();
     });
 
