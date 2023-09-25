@@ -17,8 +17,8 @@ import 'package:flutter_isolate/flutter_isolate.dart';
 
 List<int> completedRunNumbers = [];
 
-class MyRuns extends ConsumerWidget {
-  const MyRuns({super.key});
+class AssignedRuns extends ConsumerWidget {
+  const AssignedRuns({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -104,7 +104,7 @@ class MyRuns extends ConsumerWidget {
                               Navigator.pushNamed(context, '/map');
                             }
                           : null,
-                      child: myRunsIconState(context, run.status),
+                      child: assignedRunsIconState(context, run.status),
                     ),
                   ),
                   title: Column(
@@ -210,7 +210,7 @@ class MyRuns extends ConsumerWidget {
     );
   }
 
-  Icon myRunsIconState(BuildContext context, String runState) {
+  Icon assignedRunsIconState(BuildContext context, String runState) {
     Icon myRunIcon;
     switch (runState) {
       case "pending":

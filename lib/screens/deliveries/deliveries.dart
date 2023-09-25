@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/screens/deliveries/widgets/deliveries_list_view.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
+import 'package:logmap/screens/runs/widgets/assigned_runs.dart';
+import 'package:logmap/screens/runs/widgets/my_runs.dart';
 import 'package:logmap/shared/widgets/bottom_nav.dart';
 
 class DeliveriesScreen extends ConsumerWidget {
@@ -18,12 +20,12 @@ class DeliveriesScreen extends ConsumerWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false, // Disable the back arrow
           title: const Text(
-            'Pedidos',
+            'Entregas',
             style: TextStyle(color: Colors.white),
           ),
         ),
         body: selectedRun != null
-            ? DeliveriesListView(deliveriesRef: selectedRun.deliveriesRef)
+            ? const AssignedRuns()
             : const Center(
                 child: Text(
                   'Selecione uma corrida',

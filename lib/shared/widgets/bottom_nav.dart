@@ -27,7 +27,7 @@ class BottomNavBar extends ConsumerWidget {
             FontAwesomeIcons.boxesPacking,
             size: 20,
           ),
-          label: 'Pedidos',
+          label: 'Entregas',
         ),
         BottomNavigationBarItem(
           icon: Icon(
