@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logmap/screens/deliveries/widgets/deliveries_list_view.dart';
 import 'package:logmap/providers/selected_run_provider.dart';
 import 'package:logmap/screens/runs/widgets/assigned_runs.dart';
-import 'package:logmap/screens/runs/widgets/my_runs.dart';
 import 'package:logmap/shared/widgets/bottom_nav.dart';
 
 class DeliveriesScreen extends ConsumerWidget {
@@ -25,8 +24,7 @@ class DeliveriesScreen extends ConsumerWidget {
           ),
         ),
         body: selectedRun != null
-            ? const AssignedRuns()
-            : const Center(
+            ? const Center(
                 child: Text(
                   'Selecione uma corrida',
                   style: TextStyle(
@@ -34,7 +32,8 @@ class DeliveriesScreen extends ConsumerWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
-              ),
+              )
+            : const AssignedRuns(),
       ),
     );
   }
