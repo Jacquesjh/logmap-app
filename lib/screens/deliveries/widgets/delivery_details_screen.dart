@@ -8,15 +8,89 @@ import 'package:logmap/shared/widgets/bottom_nav.dart';
 class DeliveryDetailsScreen extends ConsumerWidget {
   final Delivery delivery;
   final Client client;
+  final String? routeScreen;
 
   const DeliveryDetailsScreen({
     Key? key,
     required this.delivery,
     required this.client,
+    required this.routeScreen,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    List<Widget> deliveryChild = [];
+    if(routeScreen == '/deliveryRoute'){
+      deliveryChild.add(const SizedBox(width: 10.0));
+      
+      deliveryChild.add(
+        delivery.isComplete
+            ? const Icon(
+                Icons.check_box_outlined,
+                color: Color(0xFF08F26E),
+                size: 50,
+              )
+            : TextButton(
+                onPressed: () async {
+                  final confirmed = await showConfirmationDialog(context);
+                  if (confirmed) {
+                    await delivery.updateIsComplete(true);
+                    final currentDelivery =
+                        ref.read(currentDeliveryProvider.notifier).state;
+
+                    if (delivery.number == currentDelivery?.number) {
+                      ref
+                          .read(currentDeliveryIsCompletedProvider.notifier)
+                          .state = true;
+                    }
+                  }
+                },
+                child: const Icon(
+                  Icons.check_box_outline_blank,
+                  color: Color(0xFF08F26E),
+                  size: 50,
+                ),
+              ),
+      );
+
+      deliveryChild.add(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Entrega #${delivery.number}',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      );
+
+
+    }else{
+      deliveryChild.add(const SizedBox(width: 10.0));
+      
+      deliveryChild.add(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Entrega #${delivery.number}',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+
     return Scaffold(
       bottomNavigationBar: const BottomNavBar(),
       appBar: AppBar(
@@ -36,55 +110,11 @@ class DeliveryDetailsScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 5.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      delivery.isComplete
-                          ? const Icon(
-                              Icons.check_box_outlined,
-                              color: Color(0xFF08F26E),
-                              size: 50,
-                            )
-                          : TextButton(
-                              onPressed: () async {
-                                final confirmed =
-                                    await showConfirmationDialog(context);
-                                if (confirmed) {
-                                  await delivery.updateIsComplete(true);
-                                  final currentDelivery = ref
-                                      .read(currentDeliveryProvider.notifier)
-                                      .state;
-
-                                  if (delivery.number ==
-                                      currentDelivery?.number) {
-                                    ref
-                                        .read(currentDeliveryIsCompletedProvider
-                                            .notifier)
-                                        .state = true;
-                                  }
-                                }
-                              },
-                              child: const Icon(
-                                Icons.check_box_outline_blank,
-                                color: Color(0xFF08F26E),
-                                size: 50,
-                              ),
-                            ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Entrega #${delivery.number}',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    children: deliveryChild,
                   ),
                   //const SizedBox(height: 5), 
                   Padding(

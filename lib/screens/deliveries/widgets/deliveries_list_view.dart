@@ -54,6 +54,7 @@ class DeliveriesListView extends StatelessWidget {
                         builder: (context) => DeliveryDetailsScreen(
                           delivery: delivery,
                           client: client,
+                          routeScreen: null,
                         ),
                       ),
                     );
@@ -63,7 +64,6 @@ class DeliveriesListView extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
                         leading: SizedBox(
-                          // width: 30,
                           child: isComplete
                               ? const Icon(
                                   Icons.check_box_outlined,
