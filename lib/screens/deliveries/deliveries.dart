@@ -23,17 +23,7 @@ class DeliveriesScreen extends ConsumerWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
-        body: selectedRun != null
-            ? const Center(
-                child: Text(
-                  'Selecione uma corrida',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              )
-            : const AssignedRuns(),
+        body: const AssignedRuns()
       ),
     );
   }

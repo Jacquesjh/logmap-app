@@ -40,7 +40,7 @@ class DeliveryRouteScreen extends ConsumerWidget {
 
         completedRunNumbers.clear();
 
-        final runIndex = ref.read(selectedRunProvider.notifier).state!.number - 2;
+        final runIndex = ref.read(selectedRunProvider.notifier).state!.number - 1;
         final run = Run.fromSnapshot(runs[runIndex]);
         List<dynamic> deliveriesRef = run.route;
         
